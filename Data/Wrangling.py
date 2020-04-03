@@ -116,3 +116,30 @@ layout_v3 = dict(
 
 
 ##########################Data for Visual 4##########################
+#Filter dataset to get relevant data
+df_v4 = df[['Origin', 'Year', 'Value']]
+df_v4 = df_v4[ df_v4.Year.isin(range(1999,2008))]
+df_v4 = df_v4.drop(['Year'], axis = 1)
+
+#Group df by country to find total numbers for each country
+df_v4 = df_v4.groupby('Origin').Value.sum()
+df_v4 = df_v4.to_frame(name = 'count').reset_index()
+
+#Select the top 10 Countries
+df_v4.sort_values(by=['count'], ascending = False, inplace = True)
+df_v4 = df_v4.iloc[:10,:]
+
+#Create output dictionary for Plotly
+visual_4 = []
+visual_4.append(
+        go.Bar(
+                x = df_v4['Origin'].values.tolist(),
+                y = df_v4['count'].values.tolist(),
+               )
+        )
+layout_v3 = dict(
+        title = 'Top 10 Countries of Origin for Asylum Seekers (1999 - 2008)',
+        xaxis = dict(title = 'Country'),
+        yaxis = dict(title = 'Number of Migrants'))
+
+##########################Data for Visual 5##########################
