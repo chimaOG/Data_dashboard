@@ -137,9 +137,37 @@ visual_4.append(
                 y = df_v4['count'].values.tolist(),
                )
         )
-layout_v3 = dict(
+layout_v4 = dict(
         title = 'Top 10 Countries of Origin for Asylum Seekers (1999 - 2008)',
         xaxis = dict(title = 'Country'),
         yaxis = dict(title = 'Number of Migrants'))
 
+
+
+
 ##########################Data for Visual 5##########################
+#Filter dataset to get relevant data
+df_v5 = df[['Origin', 'Year', 'Value']]
+df_v5 = df_v5[ df_v4.Year.isin(range(2009,2018))]
+df_v5 = df_v5.drop(['Year'], axis = 1)
+
+#Group df by country to find total numbers for each country
+df_v5 = df_v5.groupby('Origin').Value.sum()
+df_v5 = df_v5.to_frame(name = 'count').reset_index()
+
+#Select the top 10 Countries
+df_v5.sort_values(by=['count'], ascending = False, inplace = True)
+df_v5 = df_v5.iloc[:10,:]
+
+#Create output dictionary for Plotly
+visual_5 = []
+visual_5.append(
+        go.Bar(
+                x = df_v5['Origin'].values.tolist(),
+                y = df_v5['count'].values.tolist(),
+               )
+        )
+layout_v5 = dict(
+        title = 'Top 10 Countries of Origin for Asylum Seekers (2009 - 2018)',
+        xaxis = dict(title = 'Country'),
+        yaxis = dict(title = 'Number of Migrants'))
