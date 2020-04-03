@@ -40,7 +40,8 @@ visual_1.append(
         go.Scatter(
                 x = df_v1['Year'].values.tolist(),
                 y = df_v1['count'].values.tolist(),
-                mode = 'lines'
+                mode = 'lines',
+                name = 'Year'
                )
         )
 layout_v1 = dict(
@@ -52,13 +53,29 @@ layout_v1 = dict(
 ##########################Data for Visual 2##########################
 #Filter dataset to get relevant data
 df_v2 = df[['Country', 'Year', 'Value']]
-df_v2 = df_v2[ df_v2.Year.isin(range(1999,2009))]
+df_v2 = df_v2[ df_v2.Year.isin(range(1999,2008))]
 df_v2 = df_v2.drop(['Year'], axis = 1)
 
 #Group df by country to find total numbers for each country
 df_v2 = df_v2.groupby('Country').Value.sum()
 df_v2 = df_v2.to_frame(name = 'count').reset_index()
 
+#Select the top 10 Countries
+df_v2.sort_values(by=['count'], ascending = False, inplace = True)
+df_v2 = df_v2.iloc[:10,:]
+
+#Create output dictionary for Plotly
+visual_2 = []
+visual_2.append(
+        go.Bar(
+                x = df_v2['Country'].values.tolist(),
+                y = df_v2['count'].values.tolist(),
+               )
+        )
+layout_v2 = dict(
+        title = 'Top 10 Asylum Destinations From 1999 - 2008',
+        xaxis = dict(title = 'Country'),
+        yaxis = dict(title = 'Number of Migrants'))
 
 ##########################Data for Visual 3##########################
     
