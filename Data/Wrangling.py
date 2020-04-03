@@ -16,9 +16,15 @@ import pandas as pd
 import plotly.graph_objs as go
 
 #Reading the data from the CSV file into a dataframe 
-df = pd.read_csv("asylum-seekers-monthly.csv")
+df = pd.read_csv("asylum-seekers-global.csv")
 df.rename(columns={'Country / territory of asylum/residence': 'Country'}, inplace = True)
-    
+
+#Clean the data 
+#Drop missing data and null values
+df.drop(df[df.Value == '*'].index, inplace=True)
+
+#Cast entries in the Value column to integer (We're counting human beings)
+df.Value = df.Value.astype('int64')
     
 ##########################Data for Visual 1##########################
     
@@ -44,7 +50,14 @@ layout_v1 = dict(
     
     
 ##########################Data for Visual 2##########################
+#Filter dataset to get relevant data
+df_v2 = df[['Country', 'Year', 'Value']]
+df_v2 = df_v2[ df_v2.Year.isin(range(1999,2009))]
+df_v2 = df_v2.drop(['Year'], axis = 1)
 
+#Group df by country to find total numbers for each country
+df_v2 = df_v2.groupby('Country').Value.sum()
+df_v2 = df_v2.to_frame(name = 'count').reset_index()
 
 
 ##########################Data for Visual 3##########################
