@@ -26,6 +26,9 @@ df.drop(df[df.Value == '*'].index, inplace=True)
 #Cast entries in the Value column to integer (We're counting human beings)
 df.Value = df.Value.astype('int64')
     
+
+
+
 ##########################Data for Visual 1##########################
     
 #Select the required columns and groupby the Year column
@@ -49,6 +52,8 @@ layout_v1 = dict(
         xaxis = dict(title = 'Year'),
         yaxis = dict(title = 'Number of Migrants'))
     
+
+
     
 ##########################Data for Visual 2##########################
 #Filter dataset to get relevant data
@@ -77,6 +82,37 @@ layout_v2 = dict(
         xaxis = dict(title = 'Country'),
         yaxis = dict(title = 'Number of Migrants'))
 
+
+
+
 ##########################Data for Visual 3##########################
-    
+#Filter dataset to get relevant data
+df_v3 = df[['Country', 'Year', 'Value']]
+df_v3 = df_v3[ df_v3.Year.isin(range(2009,2018))]
+df_v3 = df_v3.drop(['Year'], axis = 1)
+
+#Group df by country to find total numbers for each country
+df_v3 = df_v3.groupby('Country').Value.sum()
+df_v3 = df_v3.to_frame(name = 'count').reset_index()
+
+#Select the top 10 Countries
+df_v3.sort_values(by=['count'], ascending = False, inplace = True)
+df_v3 = df_v3.iloc[:10,:]
+
+#Create output dictionary for Plotly
+visual_3 = []
+visual_3.append(
+        go.Bar(
+                x = df_v3['Country'].values.tolist(),
+                y = df_v3['count'].values.tolist(),
+               )
+        )
+layout_v3 = dict(
+        title = 'Top 10 Asylum Destinations From 2009 - 2018',
+        xaxis = dict(title = 'Country'),
+        yaxis = dict(title = 'Number of Migrants'))
+
+
+
+
 ##########################Data for Visual 4##########################
