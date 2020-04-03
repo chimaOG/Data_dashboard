@@ -16,22 +16,22 @@
         <div class="row mt-4 px-3 d-flex justify-content-around">
             <div class="card col-sm-4 border border-dark" >
                 <div class="card-body d-flex flex-column align-items-center text-danger">
-                  <h5 class="card-title">Top Country of Origin</h5>
-                  <p class="card-text">{{top_origin}} </p>
+                  <h5 class="card-title font-weight-light">Top Country of Origin</h5>
+                  <p class="card-text font-weight-bold">{{top_origin}} </p>
                 </div>
             </div>
 
             <div class="card col-sm-4 border border-dark" >
                 <div class="card-body d-flex flex-column align-items-center text-primary">
-                  <h5 class="card-title">Total Number of Immigrants</h5>
-                  <p class="card-text">{{total}} </p>
+                  <h5 class="card-title font-weight-light">Total Number of Immigrants</h5>
+                  <p class="card-text font-weight-bold">12,332,003 </p>
                 </div>
             </div>
 
             <div class="card col-sm-4 border border-dark" >
                 <div class="card-body d-flex flex-column align-items-center text-success">
-                  <h5 class="card-title">Top Destination Country</h5>
-                  <p class="card-text">{{top_destination}}</p>
+                  <h5 class="card-title font-weight-light">Top Destination Country</h5>
+                  <p class="card-text font-weight-bold">{{top_destination}}</p>
                 </div>
             </div>
         </div>
@@ -69,10 +69,6 @@
                 figures[i].data,
                 figures[i].layout || {});
         }
-
-        var origin = {{top_origin}};
-        var total = {{total}};
-        var destination = {{top_destination}};
     </script>
 </footer>
 </html>

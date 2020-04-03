@@ -23,6 +23,8 @@ def data_wrangle():
     #Clean the data 
     #Drop missing data and null values
     df.drop(df[df.Value == '*'].index, inplace=True)
+    df.replace('USA (INS/DHS)', 'USA', inplace = True)
+    df.replace('USA (EOIR)', 'USA', inplace = True)
     
     #Cast entries in the Value column to integer (We're counting human beings)
     df.Value = df.Value.astype('int64')
@@ -35,13 +37,15 @@ def data_wrangle():
     total = df_card.Value.sum()
     
     #Top country of Origin
-    top_origin = df_card.Origin.value_counts()
+    top_origin = df_card.groupby('Origin').Value.sum()
     top_origin = top_origin.to_frame(name = 'count').reset_index()
+    top_origin = top_origin.sort_values('count', ascending=False)
     top_origin = top_origin.iloc[0,0]
     
     #Top Asylum Destination
-    top_destination = df_card.Country.value_counts()
+    top_destination = df_card.groupby('Country').Value.sum()
     top_destination = top_destination.to_frame(name = 'count').reset_index()
+    top_destination = top_destination.sort_values('count', ascending=False)
     top_destination = top_destination.iloc[0,0]
     
     
