@@ -149,7 +149,7 @@ def data_wrangle():
     ##########################Data for Visual 5##########################
     #Filter dataset to get relevant data
     df_v5 = df[['Origin', 'Year', 'Value']]
-    df_v5 = df_v5[ df_v4.Year.isin(range(2009,2018))]
+    df_v5 = df_v5[ df_v5.Year.isin(range(2009,2018))]
     df_v5 = df_v5.drop(['Year'], axis = 1)
     
     #Group df by country to find total numbers for each country
