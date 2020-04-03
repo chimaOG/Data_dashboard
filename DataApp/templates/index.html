@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asylum Seekers Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <div class="container bg-light">
+        <nav class=" row navbar navbar-expand-lg navbar-dark bg-dark d-flex justify-content-center">
+            <a class="navbar-brand font-weight-bolder" href="#">Global Asylum Seekers Dashboard (1999-2018)</a>
+        </nav>
+
+        <div class="row mt-4 px-3 d-flex justify-content-around">
+            <div class="card col-sm-4 border border-dark" >
+                <div class="card-body d-flex flex-column align-items-center text-danger">
+                  <h5 class="card-title">Top Country of Origin</h5>
+                  <p class="card-text">{{top_origin}} </p>
+                </div>
+            </div>
+
+            <div class="card col-sm-4 border border-dark" >
+                <div class="card-body d-flex flex-column align-items-center text-primary">
+                  <h5 class="card-title">Total Number of Immigrants</h5>
+                  <p class="card-text">{{total}} </p>
+                </div>
+            </div>
+
+            <div class="card col-sm-4 border border-dark" >
+                <div class="card-body d-flex flex-column align-items-center text-success">
+                  <h5 class="card-title">Top Destination Country</h5>
+                  <p class="card-text">{{top_destination}}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-3 px-3 d-flex justify-content-center">
+                <div id="{{ids[0]}}" class="col-10"> 
+                </div>
+        </div>
+
+        <div class="row mx-3 my-3 d-flex justify-content-around bg-white">
+                <div id="{{ids[1]}}" class="col-5"></div>
+                <div id="{{ids[2]}}" class="col-5"></div>
+        </div>
+            <div class="row mx-3 my-3 d-flex justify-content-around bg-white" >
+                <div class="col-5" id="{{ids[3]}}"></div>
+                <div class="col-5" id="{{ids[4]}}"></div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+</body>
+
+<footer>
+    <script type="text/javascript">
+        // plots the figure with id
+        // id much match the div id above in the html
+          
+        var figures = {{figuresJSON | safe}};
+        var ids = {{ids | safe}};
+        for(var i in figures) {
+            Plotly.plot(ids[i],
+                figures[i].data,
+                figures[i].layout || {});
+        }
+
+        var origin = {{top_origin}};
+        var total = {{total}};
+        var destination = {{top_destination}};
+    </script>
+</footer>
+</html>

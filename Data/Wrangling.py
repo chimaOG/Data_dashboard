@@ -17,7 +17,7 @@ import plotly.graph_objs as go
 
 def data_wrangle():
     #Reading the data from the CSV file into a dataframe 
-    df = pd.read_csv("asylum-seekers-global.csv")
+    df = pd.read_csv("Data/asylum-seekers-global.csv")
     df.rename(columns={'Country / territory of asylum/residence': 'Country'}, inplace = True)
     
     #Clean the data 
@@ -27,6 +27,22 @@ def data_wrangle():
     #Cast entries in the Value column to integer (We're counting human beings)
     df.Value = df.Value.astype('int64')
         
+    
+    ##########################Data for Card Figures#####################
+    df_card  = df[['Country', 'Origin', 'Value']]
+    
+    #Total number of immigrants
+    total = df_card.Value.sum()
+    
+    #Top country of Origin
+    top_origin = df_card.Origin.value_counts()
+    top_origin = top_origin.to_frame(name = 'count').reset_index()
+    top_origin = top_origin.iloc[0,0]
+    
+    #Top Asylum Destination
+    top_destination = df_card.Country.value_counts()
+    top_destination = top_destination.to_frame(name = 'count').reset_index()
+    top_destination = top_destination.iloc[0,0]
     
     
     
@@ -80,7 +96,6 @@ def data_wrangle():
             )
     layout_v2 = dict(
             title = 'Top 10 Asylum Destinations From 1999 - 2008',
-            xaxis = dict(title = 'Country'),
             yaxis = dict(title = 'Number of Migrants'))
     
     
@@ -110,7 +125,6 @@ def data_wrangle():
             )
     layout_v3 = dict(
             title = 'Top 10 Asylum Destinations From 2009 - 2018',
-            xaxis = dict(title = 'Country'),
             yaxis = dict(title = 'Number of Migrants'))
     
     
@@ -139,8 +153,7 @@ def data_wrangle():
                    )
             )
     layout_v4 = dict(
-            title = 'Top 10 Countries of Origin for Asylum Seekers (1999 - 2008)',
-            xaxis = dict(title = 'Country'),
+            title = 'Top 10 Asylum Countries of Origin(1999 - 2008)',
             yaxis = dict(title = 'Number of Migrants'))
     
     
@@ -169,8 +182,7 @@ def data_wrangle():
                    )
             )
     layout_v5 = dict(
-            title = 'Top 10 Countries of Origin for Asylum Seekers (2009 - 2018)',
-            xaxis = dict(title = 'Country'),
+            title = 'Top 10 Asylum Countries of Origin(2009 - 2018)',
             yaxis = dict(title = 'Number of Migrants'))
     
     
@@ -182,6 +194,6 @@ def data_wrangle():
     figures.append(dict(data=visual_3, layout=layout_v3))
     figures.append(dict(data=visual_4, layout=layout_v4))
     figures.append(dict(data=visual_5, layout=layout_v5))
+   
         
-        
-    return figures
+    return figures, top_origin, total, top_destination

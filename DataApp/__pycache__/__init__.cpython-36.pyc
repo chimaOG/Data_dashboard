@@ -1,0 +1,8 @@
+3
+I�[t�@slddlmZddlmZddlZddlmZe�Ze	e�ej
+d�ej
+d�dd���Zej
+d	�d
+d��ZdS)�)�app)�render_templateN)�data_wrangling�/z/indexcCstd�S)Nz
+index.html)r�rr�&/home/workspace/worldbankapp/routes.py�indexsrz/project-onecCstd�S)Nzproject_one.html)rrrrr�project_onesr	)
+�worldbankappr�flaskrZpandas�pdZwrangling_scripts.wranglingr�data�print�routerr	rrrr�<module>s
