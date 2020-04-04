@@ -5,7 +5,6 @@ from Data.Wrangling import data_wrangle
 
 
 @app.route('/')
-@app.route('/index')
 def index():
 
     figures,topO,total,topD = data_wrangle()
