@@ -1,1 +1,1 @@
-web gunicorn asylum-seekers:app
+web: gunicorn asylum-seekers:app
