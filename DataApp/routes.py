@@ -5,10 +5,12 @@ from Data.Wrangling import data_wrangle
 
 
 @app.route('/')
+@app.route('/index')
+
 def index():
 
     figures,topO,total,topD = data_wrangle()
-    print(figures)
+
     # plot ids for the html id tag
     ids = ['figure-{}'.format(i) for i, _ in enumerate(figures)]
 
